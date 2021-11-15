@@ -14,7 +14,7 @@ class BooksApp extends React.Component {
     }
     BooksAPI.getAll().then(Books => allBooks = [...Books])
       .then(d => console.log(...allBooks))
-      .then(e => allBooks.forEach(element => initState[element.shelf].push(element)))
+      .then(e => allBooks.forEach(book => initState[book.shelf].push(book)))
       .then(e => this.setState(initState))
       .then(e => console.log(this.state.showSearchPage));
   }
