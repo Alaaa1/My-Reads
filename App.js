@@ -1,9 +1,23 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 import HomePage from './Components/HomePage'
 
 class BooksApp extends React.Component {
+
+  componentDidMount() {
+    let allBooks = [];
+    const initState = {
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+    }
+    BooksAPI.getAll().then(Books => allBooks = [...Books])
+      .then(d => console.log(...allBooks))
+      .then(e => allBooks.forEach(element => initState[element.shelf].push(element)))
+      .then(e => this.setState(initState))
+      .then(e => console.log(this.state.showSearchPage));
+  }
   state = {
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -11,7 +25,7 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
   }
 
   render() {
