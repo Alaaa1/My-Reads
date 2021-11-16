@@ -7,15 +7,16 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     let allBooks = [];
-    const initState = {
+    const newState = {
       currentlyReading: [],
       wantToRead: [],
       read: [],
+      fetchedData: true,
     }
     BooksAPI.getAll().then(Books => allBooks = [...Books])
       .then(d => console.log(...allBooks))
-      .then(e => allBooks.forEach(book => initState[book.shelf].push(book)))
-      .then(e => this.setState(initState))
+      .then(e => allBooks.forEach(book => newState[book.shelf].push(book)))
+      .then(e => this.setState(newState))
       .then(e => console.log(this.state.showSearchPage));
   }
   state = {
@@ -26,6 +27,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
+    fetchedData: false,
   }
 
   render() {
@@ -58,11 +60,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <div>
-                <BookShelf name={'Currently Reading'} books={this.state.currentlyReading} />
+              {(this.state.fetchedData) && (<div><BookShelf name={'Currently Reading'} books={this.state.currentlyReading} />
                 <BookShelf name={'Want to Read'} books={this.state.wantToRead} />
-                <BookShelf name={'Read'} books={this.state.read} />
-              </div>
+                <BookShelf name={'Read'} books={this.state.read} /></div>)}
             </div>
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>

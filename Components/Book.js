@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 class Book extends Component {
+    state = {
+        book: this.props.book
+    }
     render() {
         return (
             <div className="book">
