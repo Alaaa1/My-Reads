@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BookShelf from './BookShelf';
 import * as BooksAPI from '../BooksAPI'
+import { Link } from 'react-router-dom';
 
 class HomePage extends Component {
     componentDidMount() {
@@ -42,49 +43,27 @@ class HomePage extends Component {
          * users can use the browser's back and forward buttons to navigate between
          * pages, as well as provide a good URL they can bookmark and share.
          */
-        showSearchPage: false,
         fetchedData: false,
     }
 
     render() {
         return (
-            this.state.showSearchPage ? (
-                <div className="search-books">
-                    <div className="search-books-bar">
-                        <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-                        <div className="search-books-input-wrapper">
-                            {/*
-                      NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                      You can find these search terms here:
-                      https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-    
-                      However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                      you don't find a specific author or title. Every search is limited by search terms.
-                    */}
-                            <input type="text" placeholder="Search by title or author" />
-
-                        </div>
-                    </div>
-                    <div className="search-books-results">
-                        <ol className="books-grid"></ol>
-                    </div>
+            <div className="list-books">
+                <div className="list-books-title">
+                    <h1>MyReads</h1>
                 </div>
-            ) : (
-                <div className="list-books">
-                    <div className="list-books-title">
-                        <h1>MyReads</h1>
-                    </div>
-                    <div className="list-books-content">
-                        {(this.state.fetchedData) && (<div>
-                            <BookShelf onShelfChange={this.updateDatabase} name={'Currently Reading'} books={this.state.currentlyReading} />
-                            <BookShelf onShelfChange={this.updateDatabase} name={'Want to Read'} books={this.state.wantToRead} />
-                            <BookShelf onShelfChange={this.updateDatabase} name={'Read'} books={this.state.read} /></div>)}
-                    </div>
-                    <div className="open-search">
-                        <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
-                    </div>
+                <div className="list-books-content">
+                    {(this.state.fetchedData) && (<div>
+                        <BookShelf onShelfChange={this.updateDatabase} name={'Currently Reading'} books={this.state.currentlyReading} />
+                        <BookShelf onShelfChange={this.updateDatabase} name={'Want to Read'} books={this.state.wantToRead} />
+                        <BookShelf onShelfChange={this.updateDatabase} name={'Read'} books={this.state.read} /></div>)}
                 </div>
-            )
+                <div className="open-search">
+                    <Link to='/search'>
+                        <button>Add a book</button>
+                    </Link>
+                </div>
+            </div>
         )
     }
 }
