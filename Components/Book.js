@@ -6,12 +6,18 @@ class Book extends Component {
         book: this.props.book,
         bookThumnail: "url(" + this.props.book.imageLinks.thumbnail + ")",
     }
+
+    changeShelf = (newShelf) => {
+        const book = this.state.book;
+        this.props.onShelfChange(book, newShelf);
+    }
+
     render() {
         return (
             <div className="book">
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: this.state.bookThumnail, }}></div>
-                    <ShelfChanger />
+                    <ShelfChanger onShelfChange={this.changeShelf} key={this.state.book.id} shelf={this.state.book.shelf} />
                 </div>
                 <div className="book-title">{this.state.book.title}</div>
                 <div className="book-authors">{this.state.book.authors.map(author =>

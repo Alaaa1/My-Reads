@@ -16,9 +16,27 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then(Books => allBooks = [...Books])
       .then(d => console.log(...allBooks))
       .then(e => allBooks.forEach(book => newState[book.shelf].push(book)))
-      .then(e => this.setState(newState))
-      .then(e => console.log(this.state.showSearchPage));
+      .then(e => this.setState(newState));
   }
+
+  updateDatabase = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => this.changeShelf(newShelf)).then(e => this.setState({ fetchedData: false }));
+  }
+
+  changeShelf = (newShelf) => {
+    let allBooks = [];
+    const newState = {
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+      fetchedData: true,
+    }
+    BooksAPI.getAll().then(Books => allBooks = [...Books])
+      .then(d => console.log(...allBooks))
+      .then(e => allBooks.forEach(book => newState[book.shelf].push(book)))
+      .then(e => this.setState(newState)).then(e => console.log(newShelf))
+  }
+
   state = {
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -60,9 +78,10 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              {(this.state.fetchedData) && (<div><BookShelf name={'Currently Reading'} books={this.state.currentlyReading} />
-                <BookShelf name={'Want to Read'} books={this.state.wantToRead} />
-                <BookShelf name={'Read'} books={this.state.read} /></div>)}
+              {(this.state.fetchedData) && (<div>
+                <BookShelf onShelfChange={this.updateDatabase} name={'Currently Reading'} books={this.state.currentlyReading} />
+                <BookShelf onShelfChange={this.updateDatabase} name={'Want to Read'} books={this.state.wantToRead} />
+                <BookShelf onShelfChange={this.updateDatabase} name={'Read'} books={this.state.read} /></div>)}
             </div>
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
