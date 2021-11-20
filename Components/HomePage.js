@@ -13,10 +13,10 @@ class HomePage extends Component {
             fetchedData: true,
         }
         BooksAPI.getAll().then(Books => allBooks = [...Books])
-            .then(d => console.log(...allBooks))
             .then(e => allBooks.forEach(book => newState[book.shelf].push(book)))
             .then(e => this.setState(newState));
     }
+
 
     updateDatabase = (book, newShelf) => {
         BooksAPI.update(book, newShelf).then(() => this.changeShelf(newShelf)).then(e => this.setState({ fetchedData: false }));
@@ -31,9 +31,8 @@ class HomePage extends Component {
             fetchedData: true,
         }
         BooksAPI.getAll().then(Books => allBooks = [...Books])
-            .then(d => console.log(...allBooks))
             .then(e => allBooks.forEach(book => newState[book.shelf].push(book)))
-            .then(e => this.setState(newState)).then(e => console.log(newShelf))
+            .then(e => this.setState(newState))
     }
 
     state = {
