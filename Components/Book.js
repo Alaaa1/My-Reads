@@ -22,7 +22,7 @@ class Book extends Component {
                 </div>
                 <div className="book-title">{this.state.book.title}</div>
                 <div className="book-authors">{(this.state.book.hasOwnProperty('authors')) && (this.state.book.authors.map(author =>
-                    <div key={this.state.book.authors.indexOf(author)}><span > {author} </span><br /></div>))} </div>
+                    <div key={this.state.book.authors.indexOf(author)}> <span > {author} </span><br /></div>))} </div>
             </div>
         )
     }
