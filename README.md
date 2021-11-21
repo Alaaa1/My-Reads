@@ -16,13 +16,10 @@ REQUIREMENTS
 ------------
 
 * React
-* Node and npm
+* Node JS and npm
 
 
 INSTALLATION
 ------------
 
 Open a new terminal and run 'npm install' followed by 'npm start'
-
-
-
